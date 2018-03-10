@@ -1,0 +1,6 @@
+[package]
+name = "idea_unit"
+version = "0.1.0"
+authors = ["Wei Ning <nwcgnw@gmail.com>"]
+
+[dependencies]
