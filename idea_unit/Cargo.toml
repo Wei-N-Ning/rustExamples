@@ -3,4 +3,13 @@ name = "idea_unit"
 version = "0.1.0"
 authors = ["Wei Ning <nwcgnw@gmail.com>"]
 
+[lib]
+name = "ideaunitlib"
+path = "src/lib.rs"
+
+[[bin]]
+name = "ideaunitbin"
+path = "src/main.rs"
+
 [dependencies]
+rand = "0.4"
