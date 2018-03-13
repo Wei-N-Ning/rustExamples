@@ -1,0 +1,15 @@
+[package]
+name = "techniques"
+version = "0.1.0"
+authors = ["Wei Ning <nwcgnw@gmail.com>"]
+
+[lib]
+name = "techniqueslib"
+path = "src/lib.rs"
+
+[[bin]]
+name = "techniquesbin"
+path = "src/main.rs"
+
+
+[dependencies]
