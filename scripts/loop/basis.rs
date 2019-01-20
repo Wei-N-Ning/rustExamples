@@ -40,8 +40,8 @@ fn continue_break(nums: Vec<i32>) {
         if elem / 2 == 0 {
             continue;
         }
-        if elem 
-        println("{}", elem);
+        println!(".. {}", elem);
+        break;
     }
 }
 
@@ -57,7 +57,8 @@ fn main() {
     let nums = vec![1, 2];
     vector_loop(nums);
 
-    continue_break();
+    let nums = vec![3, 4];
+    continue_break(nums);
 
     println!("+ done");
 }
