@@ -1,3 +1,5 @@
+use rand::random;
+
 fn main() {
-    println!("Hello, world!");
+    println!("{}", random());
 }
