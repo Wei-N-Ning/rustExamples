@@ -56,7 +56,8 @@ fn main() {
     // nums.push(2);
     let nums = vec![1, 2];
     vector_loop(nums);
-
+    
+    // can NOT be vec![3..4] or vec!3..4
     let nums = vec![3, 4];
     continue_break(nums);
 
