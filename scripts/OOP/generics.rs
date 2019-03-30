@@ -8,6 +8,22 @@ struct Point<T> {
     y: T,
 }
 
+// implements the interface Point
+impl<T> Point<T> {
+    fn distance(&self) -> &T {
+        println!("generic impl");
+        &self.x
+    }
+}
+
+// implements for concrete type
+impl Point<i32> {
+    fn idistance(&self) -> &i32 {
+        println!("i32 impl");
+        &self.x
+    }
+}
+
 fn test_point() {
     let ipoint = Point {x:5, y:10};
     let fpoint = Point {x:5.0, y:10.0};
@@ -17,6 +33,8 @@ fn test_point() {
     // it is great that it does not implicitly convert Int to
     // Float
     println!("{:?} {:?}", ipoint.x, fpoint.y);
+    println!("distance: {}", ipoint.distance());
+    println!("distance: {}", ipoint.idistance());
 }
 
 fn main() {
