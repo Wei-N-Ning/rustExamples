@@ -21,6 +21,20 @@ fn for_loop(num: i8) {
     }
 }
 
+fn for_in_loop() {
+    // for loop only takes iterator
+    let l = [3, 1, 4, 1, 5, 9];
+
+    for elem in l.into_iter() {
+        print!("{}", elem);
+    }
+
+    // DO NOT
+    // for elem in l {
+    //     print!("{}", elem);
+    // }
+}
+
 fn while_loop(num: i8) {
     let mut counter = num;
     while counter > 0 {
@@ -30,9 +44,34 @@ fn while_loop(num: i8) {
 }
 
 fn vector_loop(nums: Vec<i32>) {
+    // compiler creates an iterator out of the Vector
+    println!("for-in-loop with vector");
     for elem in nums {
-        println!("{}", elem);
+        print!("{}", elem);
     }
+
+    // equivalent to 
+    // let mut iter = IntoIterator::into_iter(nums);
+    // loop {
+    //     match iter.next() {
+    //         Some(elem) => {
+    //             print!("{}", elem);
+    //         }
+    //         None => { break }
+    //     }
+    // }
+
+    // into_iter takes the ownership of the Vector (move the
+    // elements to the loop)
+    // in comparison:
+    
+    // for elem in nums.iter() { }
+    // to iterate over an immutable reference
+    // elem is &i32 !!!
+
+    // for elem in nums.iter_mut() { }
+    // to iterate over an mutable ref
+
 }
 
 fn continue_break(nums: Vec<i32>) {
@@ -48,6 +87,7 @@ fn continue_break(nums: Vec<i32>) {
 fn main() {
     loop_loop(3);
     for_loop(3);
+    for_in_loop();
     while_loop(3);
 
     // prefer the micro 
