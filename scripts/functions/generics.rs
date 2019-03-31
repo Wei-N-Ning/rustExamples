@@ -12,13 +12,28 @@ fn largest<T: PartialOrd + Copy>(elements: &[T]) -> T {
         // like in C++
         // this requirement is defined as trait bounds
         // T: PartialOrd + Copy
-        // PartialOrd: partial order - comparable, order-able
-        // Copy: to copy the value of the elem to largest
+        // PartialOrd: partial order - comparable, order-able 
+        //          give the ability to use greater-than
+        // Copy: to copy the value whenever possible
         if element > largest {
             largest = element;
         }
     }
     largest
+}
+
+// break the trait specification in a separate line
+fn smallest<T>(elements: &[T]) -> T 
+    where T: PartialOrd +
+             Copy
+{
+    let mut smallest = elements[0];
+    for &elem in elements.iter() {
+        if elem < smallest {
+            smallest = elem;
+        }
+    }
+    smallest
 }
 
 fn test_largest() {
@@ -31,6 +46,8 @@ fn test_largest() {
     let chars = vec!['t', 'h', 'e', 'r', 'e', 'i', 's'];
     let c = largest(&chars);
     println!("largest char: {}", c);
+
+    println!("smallest char: {}", smallest::<char>(&chars));
 }
 
 fn main() {
