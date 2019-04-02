@@ -1,0 +1,7 @@
+[package]
+name = "example-binary"
+version = "0.1.0"
+authors = ["Wei Ning <wei@canva.com>"]
+edition = "2018"
+
+[dependencies]

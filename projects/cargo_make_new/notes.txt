@@ -1,0 +1,29 @@
+
+// create a new binary project named example-binary
+cargo new example-binary --bin
+cd example-binary
+cargo run
+.
+├── Cargo.lock
+├── Cargo.toml
+└── src
+    └── main.rs  // main entry point, fn main()
+```
+[package]
+name = "example-binary"
+version = "0.1.0"
+authors = ["Wei Ning <macgnw@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+```
+
+// create a new library project named example-library
+cargo new example-library --lib
+cd example-library
+cargo test
+.
+├── Cargo.lock
+├── Cargo.toml
+└── src
+    └── lib.rs  // public interface(s) to expose
