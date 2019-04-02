@@ -1,7 +1,9 @@
 [package]
-name = "example-library"
+name = "use_crates"
 version = "0.1.0"
 authors = ["Wei Ning <wei@canva.com>"]
 edition = "2018"
 
 [dependencies]
+rand = "0.5.5"
+examplelib = { path = "../cargo_make_new/examplelib" }

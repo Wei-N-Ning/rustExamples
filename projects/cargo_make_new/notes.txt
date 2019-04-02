@@ -1,7 +1,7 @@
 
-// create a new binary project named example-binary
-cargo new example-binary --bin
-cd example-binary
+// create a new binary project named examplelib
+cargo new examplelib --bin
+cd examplelib
 cargo run
 .
 ├── Cargo.lock
@@ -10,7 +10,7 @@ cargo run
     └── main.rs  // main entry point, fn main()
 ```
 [package]
-name = "example-binary"
+name = "examplelib"
 version = "0.1.0"
 authors = ["Wei Ning <macgnw@gmail.com>"]
 edition = "2018"
@@ -18,9 +18,9 @@ edition = "2018"
 [dependencies]
 ```
 
-// create a new library project named example-library
-cargo new example-library --lib
-cd example-library
+// create a new library project named examplebin
+cargo new examplebin --lib
+cd examplebin
 cargo test
 .
 ├── Cargo.lock
