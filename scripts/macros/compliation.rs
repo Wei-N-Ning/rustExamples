@@ -7,7 +7,6 @@ fn platform_agnostic_code() {
         println!("Mac OS foo");
     }
     else if cfg!(target_os = "linux") {
-        LinuxClass {};
         println!("Linux foo");
     }
     else {
