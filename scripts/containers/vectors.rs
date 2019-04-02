@@ -13,6 +13,9 @@ fn creation() {
     // turbofish 
     let elems = Vec::<i32>::new();
     println!("{:?}", elems);
+
+    // to create a vec of ten 1s!
+    assert_eq!(vec![1; 10], vec![1; 10])
 }
 
 fn main() {

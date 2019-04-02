@@ -2,6 +2,10 @@
 //$(which mkdir) -p ${dst}; 
 //$(which rustc) -o "${out}" 1>&2 "$0" && "${out}" "$@"; exit $?
 
+//////////////////////////////////
+// macros do not have namespaces!!
+//////////////////////////////////
+
 macro_rules! say {
     // matches no argument
     () => {
@@ -13,7 +17,7 @@ macro_rules! say {
     // *: allow repeating
     ( $( $x:expr ),* ) => {
         print!("there are: ");
-        // iterate over each arg
+        // iterate over all the arguments (repeating N times)
         $(
             print!("{}", $x);
         )*
@@ -24,4 +28,6 @@ macro_rules! say {
 fn main() {
     say!();
     say!(1);
+    say!('a', 'b', 'c');
+    assert!(1 == 1);
 }
