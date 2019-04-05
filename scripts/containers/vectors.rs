@@ -15,7 +15,7 @@ fn creation() {
     println!("{:?}", elems);
 
     // to create a vec of ten 1s!
-    assert_eq!(vec![1; 10], vec![1; 10])
+    assert_eq!(vec![1; 5], vec![1, 1, 1, 1, 1])
 }
 
 fn main() {
