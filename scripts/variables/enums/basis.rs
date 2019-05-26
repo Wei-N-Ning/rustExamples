@@ -17,6 +17,10 @@ pub enum Room {
     Kitchen,
     Bedroom(Bed),
     Lounge(i8),  // to specify the width of the enum
+
+    // also explained in udemy training course
+    // the value of an instance of Room can only be one of these 
+    // three variants, and the compiler will enforce that
 }
 
 fn main() {
