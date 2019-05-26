@@ -28,7 +28,7 @@ fn iter_char() {
         println!("as char: {}", c);  // 1 ascii char, 2 unicode chars
     }
     for bt in s.bytes() {
-        println!("as byte: {}", bt);  // 1 + 4 bytes
+        println!("as byte: {}", bt);  // for "aøπ" the total bytes are 1 + 4
     }
     
     // use enumeration
