@@ -1,6 +1,17 @@
 use std::env;
 mod cipher;
 
+/// This is a doc comment! It gets documented.
+/// 
+/// # Examples
+/// 
+/// ```rust
+/// println!("called sut()");
+/// ```
+pub fn sut() {
+    ;
+}
+
 fn main() {
     let args: Vec<String> = env::args().collect();
     match args.len() {
