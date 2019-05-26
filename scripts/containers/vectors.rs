@@ -2,6 +2,10 @@
 //$(which mkdir) -p ${dst}; 
 //$(which rustc) -o "${out}" 1>&2 "$0" && "${out}" "$@"; exit $?
 
+// strings and vectors are both heap-allocated
+// they consist a pointer to the heap memory and a little metadata
+// such as length
+
 fn creation() {
     // specify type of element
     let mut elements: Vec<i32> = Vec::new(); elements.push(1);
