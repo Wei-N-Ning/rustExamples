@@ -2,6 +2,8 @@
 //$(which mkdir) -p ${dst}; 
 //$(which rustc) -o "${out}" 1>&2 "$0" && "${out}" "$@"; exit $?
 
+// algorithms with rust L496
+
 fn shoot(val: i32) -> Option<i32> {
     if val > 0 {
         return Some(val);

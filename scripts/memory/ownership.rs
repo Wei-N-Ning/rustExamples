@@ -2,6 +2,25 @@
 //$(which mkdir) -p ${dst}; 
 //$(which rustc) -o "${out}" 1>&2 "$0" && "${out}" "$@"; exit $?
 
+// algorithms with rust L552
+// the rules of ownership
+// 1) the owner of a value is a variable 
+// 2) at any time only a single owner is allowed
+// 3) the value is lost when the owner goes out of scope
+
+// L568
+// every variable is owned by exactly one scope at any time
+// therefore the developer is forced to pass ownership as required
+
+// L581
+// stack variables are typically passed by value ...means that the 
+// entire value is copied and placed into the stack frame of the 
+// function
+// rust does the same but it also invalidates further use of that
+// variable in the - now parent - scope 
+// ownership moves into the new scope and can only be transferred
+// back as a return value
+
 fn consumer(_s: String) {
     ;
 }
