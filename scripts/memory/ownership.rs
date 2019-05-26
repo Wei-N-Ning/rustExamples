@@ -45,6 +45,15 @@ fn demo_immutable_borrowing() {
 fn demo_mutable_borrowing() {
     let mut a = String::new();
     
+    // ---- this won't work, see fight with borrow checker ----
+    // two immutable borrows, which live till the end of the scope
+    // however a mutable borrow is also created via modifier()
+    // rust disable the coexistance of immutable and mutable
+    // borrow of the same data.
+    // this helps to immediate data race
+    // let _ref_1 = &a;
+    // let _ref_2 = &a;
+    
     // only one mutable borrow can exist at a time
     modifier(&mut a);
 
