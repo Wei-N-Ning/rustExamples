@@ -10,6 +10,8 @@ struct Printable {
     x: i32,
 }
 
+// Display has to be implemented for custom types (structs)
+// Whereas Debug ({:?}) is supplied by the complier
 impl Display for Printable {
     fn fmt(&self, f: &mut Formatter) -> Result {
         write!(f, 
