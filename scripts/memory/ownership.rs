@@ -27,6 +27,26 @@
 //    reference
 // 3) references can not be invalid
 
+// L556
+// borrowed variables rely heavily on lifetimes 
+// the most basic lifetime is the scope it was created in 
+// however if a reference should go into a struct field, how can 
+// the complier know that the underlying value has not been 
+// invalidated? - explicit lifetimes
+// 
+// while a function owns this part of the memory during its
+// lifetime, it can not borrow a variable for longer than it 
+// actually exists (return the struct)
+
+// - change the type definition of struct to require ownership, 
+//   this way the struct now owns the variable and it will live
+//   as long as the struct
+// - clone x to pass ownership into passing_through struct
+// - statically define vec![] &'a Vec<u32> 
+//   so it could make sense to add it as a function parameter,
+//   this is not only more allocation-efficient but also can 
+//   enforce an appropriate lifetime
+
 fn consumer(_s: String) {
     ;
 }
