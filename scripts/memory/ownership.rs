@@ -21,6 +21,12 @@
 // ownership moves into the new scope and can only be transferred
 // back as a return value
 
+// rules of borrowing
+// 1) owners can have immutable or mutable references, but not both
+// 2) there can be multiple immutable references but only one mutable
+//    reference
+// 3) references can not be invalid
+
 fn consumer(_s: String) {
     ;
 }
