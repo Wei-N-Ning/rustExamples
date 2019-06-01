@@ -2,6 +2,9 @@
 //$(which mkdir) -p ${dst}; 
 //$(which rustc) -o "${out}" 1>&2 "$0" && "${out}" "$@"; exit $?
 
+// iterator trait
+// only requires the implementation of .next() method
+
 // recall map {} in perl and ruby
 fn iterator_map() {
     let nums = vec![3, 1, 4, 1, 5, 9];
