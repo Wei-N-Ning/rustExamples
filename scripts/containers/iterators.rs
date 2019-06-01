@@ -5,6 +5,10 @@
 // iterator trait
 // only requires the implementation of .next() method
 
+// iterator provided by standard library and built-in types
+// .iter() -> immutable references
+// .iter_mut() -> mutable references
+
 // consuming iterators: sum, max...
 
 // the reduce part of map-reduce: fold

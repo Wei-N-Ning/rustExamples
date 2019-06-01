@@ -1,8 +1,9 @@
 [package]
-name = "caesar"
+name = "para_algo"
 version = "0.1.0"
 authors = ["Wei Ning <macgnw@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-rand = "0.6"
+rayon = "1.0.3"
+itertools = "0.8.0"
