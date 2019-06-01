@@ -2,15 +2,6 @@
 // see: Rayon- Data Parallelism for Fun and Profit — Nicholas Matsakis
 use rayon::prelude::*;
 
-// fn parallel_reduce() {
-//     let v: Vec<i64> = (1..1000).collect();
-//     let result: i64 = v.par_iter()
-//         .fold( |acc, elem| {
-//             acc + elem
-//         });
-//     println!("parallel reduce: {}", result)
-// }
-
 fn sum_of_squares() {
     // range to vec, see
     // https://stackoverflow.com/questions/26033976/how-do-i-create-a-vec-from-a-range-and-shuffle-it
