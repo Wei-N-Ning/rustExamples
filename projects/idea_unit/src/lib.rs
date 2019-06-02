@@ -8,7 +8,10 @@ pub mod utilities {
         if num <= 0 {
             return 0;
         }
-        return num + 2 + random::<i32>()
+        if random::<i32>() < 0 {
+            return num + 2;
+        }
+        return num + 10;
     }
 }
 
@@ -28,6 +31,6 @@ mod tests {
 
     #[test]
     fn given_two_expect_no_less_than_four() {
-        assert!(compute(2) >= 4)
+        assert!(compute(4) >= 4)
     }
 }
