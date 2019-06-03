@@ -80,6 +80,7 @@ impl TransactionLog {
 
     // example from book L1482
     pub fn pop2(&mut self) -> Option<String> {
+        // map will naturally stop when head is None
         self.head.take().map(|head| {
             if let Some(next) = head.borrow_mut().next.take() {
                 // chop the head
@@ -89,7 +90,11 @@ impl TransactionLog {
                 // no head anymore, chop the tail
                 self.tail.take();
             }
+            // if map() stops calling the inner block, length
+            // won't be decremented any more
             self.length -= 1;
+
+            // piping the String out
             Rc::try_unwrap(head)
                 .ok()
                 .expect("Something is terribly wrong")
@@ -97,12 +102,19 @@ impl TransactionLog {
                 .value // returns an option!
         })
     }
+
+    pub fn drop(&mut self) {
+        while !self.tail.is_none() {
+            self.pop2();
+        }
+    }
 }
 
 fn test_list_creation() {
     let translog = TransactionLog::new_empty();
     let head = Node::new("e1m1".to_string());
-    println!("{:?} {:?}", translog, head);
+    assert_eq!(translog.length, 0);
+    assert!(head.borrow().next.is_none());
 }
 
 fn test_list_append() {
@@ -111,7 +123,6 @@ fn test_list_append() {
     (1..5).for_each(|idx| {
         translog.append("AA_".to_string() + &idx.to_string());
     });
-    println!("{:?}", translog);
     assert_eq!(translog.length, 4);
 }
 
@@ -125,12 +136,25 @@ fn test_list_pop() {
             println!("popped: {}", s);
         }
     });
-    println!("{:?}", translog);
     assert_eq!(translog.length, 0);
+}
+
+fn test_list_drop() {
+    let mut translog = TransactionLog::new_empty();
+    (1..5).for_each(|idx| {
+        translog.append("AA_".to_string() + &idx.to_string());
+    });
+    // default drop() impl is recursive, so is Debug print trait
+    // use a custom iterative impl
+    translog.drop();
+    assert_eq!(translog.length, 0);
+    assert!(translog.tail.is_none());
+    assert!(translog.head.is_none());
 }
 
 fn main() {
     test_list_creation();
     test_list_append();
     test_list_pop();
+    test_list_drop();
 }
