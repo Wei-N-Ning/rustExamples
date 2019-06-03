@@ -93,8 +93,8 @@ impl TransactionLog {
             Rc::try_unwrap(head)
                 .ok()
                 .expect("Something is terribly wrong")
-                .into_inner()
-                .value
+                .into_inner() // consumes the refcell
+                .value // returns an option!
         })
     }
 }
