@@ -58,15 +58,22 @@ impl TransactionLog {
         self.tail = Some(n);
     }
 
-    pub fn remove(&mut self) {
+    // TODO: compare this to the example in the book
+    pub fn pop(&mut self) -> Option<String> {
         match self.head.take() {
             Some(old) => {
                 let n = old.borrow_mut();
+                let s = n.value.clone();
                 self.head = n.next.clone();
                 self.length -= 1;
+                if self.length == 0 {
+                    self.tail.take();
+                }
+                return Some(s);
             }
             None => {
                 self.tail.take();
+                return None;
             }
         };
     }
@@ -81,20 +88,22 @@ fn test_list_creation() {
 fn test_list_append() {
     let mut translog = TransactionLog::new_empty();
     // range is exclusive!!
-    (1..3).for_each(|_| {
-        translog.append("AA".to_string());
+    (1..5).for_each(|idx| {
+        translog.append("AA_".to_string() + &idx.to_string());
     });
     println!("{:?}", translog);
-    assert_eq!(translog.length, 2);
+    assert_eq!(translog.length, 4);
 }
 
-fn test_list_remove() {
+fn test_list_pop() {
     let mut translog = TransactionLog::new_empty();
-    (1..3).for_each(|_| {
-        translog.append("AA".to_string());
+    (1..5).for_each(|idx| {
+        translog.append("AA_".to_string() + &idx.to_string());
     });
     (1..5).for_each(|_| {
-        translog.remove();
+        if let Some(s) = translog.pop() {
+            println!("popped: {}", s);
+        }
     });
     println!("{:?}", translog);
     assert_eq!(translog.length, 0);
@@ -103,5 +112,5 @@ fn test_list_remove() {
 fn main() {
     test_list_creation();
     test_list_append();
-    test_list_remove();
+    test_list_pop();
 }
