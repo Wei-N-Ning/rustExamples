@@ -5,7 +5,7 @@
 use std::cell::RefCell;
 use std::rc::Rc;
 
-// algorithms with rust L5240
+// algorithms with rust L1482
 type NodeType = Rc<RefCell<Node>>;
 type SingleLink = Option<NodeType>;
 
@@ -59,7 +59,7 @@ impl TransactionLog {
     }
 
     // TODO: compare this to the example in the book
-    pub fn pop(&mut self) -> Option<String> {
+    pub fn _pop(&mut self) -> Option<String> {
         match self.head.take() {
             Some(old) => {
                 let n = old.borrow_mut();
@@ -76,6 +76,26 @@ impl TransactionLog {
                 return None;
             }
         };
+    }
+
+    // example from book L1482
+    pub fn pop2(&mut self) -> Option<String> {
+        self.head.take().map(|head| {
+            if let Some(next) = head.borrow_mut().next.take() {
+                // chop the head
+                self.head = Some(next);
+            }
+            else {
+                // no head anymore, chop the tail
+                self.tail.take();
+            }
+            self.length -= 1;
+            Rc::try_unwrap(head)
+                .ok()
+                .expect("Something is terribly wrong")
+                .into_inner()
+                .value
+        })
     }
 }
 
@@ -100,8 +120,8 @@ fn test_list_pop() {
     (1..5).for_each(|idx| {
         translog.append("AA_".to_string() + &idx.to_string());
     });
-    (1..5).for_each(|_| {
-        if let Some(s) = translog.pop() {
+    (1..10).for_each(|_| {
+        if let Some(s) = translog.pop2() {
             println!("popped: {}", s);
         }
     });

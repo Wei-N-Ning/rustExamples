@@ -14,8 +14,8 @@ use std::cell::RefCell;
 fn demo_interior_mutability() {
     let s = Rc::new(RefCell::new(String::from("there is")));
 
-    // immutable borrow
-    println!("{}", s.borrow());
+    // immutable borrow (immut ref)
+    assert_eq!(*s.borrow(), "there is");
     // L719
     // this mutable reference only lives as long as the function
     // call takes (push_str()), 
@@ -23,10 +23,22 @@ fn demo_interior_mutability() {
     // the borrowing rules
     s.borrow_mut().push_str(" a cow !");
 
-    // immutable borrow
-    println!("{}", s.borrow());
+    // immutable borrow (returns an immutable reference)
+    assert_eq!(*s.borrow(), "there is a cow !");
+}
+
+fn demo_into_inner() {
+    let cell = RefCell::new(5);
+    let v1 = cell.into_inner();
+    // 32 |     let v1 = cell.into_inner();
+    //    |              ---- value moved here
+    // 33 |     let v2 = cell.into_inner();
+    //    |              ^^^^ value used here after move
+    // let v2 = cell.into_inner();
+    assert_eq!(v1, 5);
 }
 
 fn main() {
     demo_interior_mutability();
+    demo_into_inner();
 }
