@@ -58,7 +58,7 @@ impl TransactionLog {
         self.tail = Some(n);
     }
 
-    // TODO: compare this to the example in the book
+    // compare this to the example in the book
     pub fn _pop(&mut self) -> Option<String> {
         match self.head.take() {
             Some(old) => {
