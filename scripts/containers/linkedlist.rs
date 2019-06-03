@@ -1,5 +1,5 @@
-//$(which true); dst=/var/tmp/sut; out=${dst}/$0.bin; 
-//$(which mkdir) -p ${dst}; 
+//$(which true); dst=/var/tmp/sut; out=${dst}/$0.bin;
+//$(which mkdir) -p ${dst};
 //$(which rustc) -o "${out}" 1>&2 "$0" && "${out}" "$@"; exit $?
 
 // source
@@ -14,7 +14,7 @@ fn demo_creation() {
 
     // without this compiler can not infer the type of ll
     (1..10).for_each(|x| ll.push_back(x));
-    // without : String the resulting value's type can not be 
+    // without : String the resulting value's type can not be
     // inferred
     let s: String = ll.iter().map(|elem| format!("{} ", elem)).collect();
     println!("{}", s);

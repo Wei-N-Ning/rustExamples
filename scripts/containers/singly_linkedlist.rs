@@ -1,5 +1,5 @@
-//$(which true); dst=/var/tmp/sut; out=${dst}/$0.bin; 
-//$(which mkdir) -p ${dst}; 
+//$(which true); dst=/var/tmp/sut; out=${dst}/$0.bin;
+//$(which mkdir) -p ${dst};
 //$(which rustc) -o "${out}" 1>&2 "$0" && "${out}" "$@"; exit $?
 
 use std::cell::RefCell;
@@ -11,14 +11,14 @@ type SingleLink = Option<NodeType>;
 
 #[derive(Debug)]
 struct Node {
-    value : String,
+    value: String,
     // heap alloc, pointer size, let the compiler to decide
     // the size of this struct
-    next : SingleLink,
+    next: SingleLink,
 }
 
 impl Node {
-    fn new(value : String) -> NodeType {
+    fn new(value: String) -> NodeType {
         Rc::new(RefCell::new(Node {
             value: value.clone(),
             next: None,
@@ -28,22 +28,26 @@ impl Node {
 
 #[derive(Debug)]
 struct TransactionLog {
-    head : SingleLink,
-    tail : SingleLink,
-    pub length : u64,
+    head: SingleLink,
+    tail: SingleLink,
+    pub length: u64,
 }
 
 impl TransactionLog {
     pub fn new_empty() -> TransactionLog {
-        TransactionLog { head: None, tail: None, length: 0 }
+        TransactionLog {
+            head: None,
+            tail: None,
+            length: 0,
+        }
     }
 
     // take advantage of Option.take(), and use match statement
     // https://doc.rust-lang.org/std/option/enum.Option.html#method.take
-    // Takes the value out of the option, leaving a None in its place.  
+    // Takes the value out of the option, leaving a None in its place.
     // see also: https://doc.rust-lang.org/stable/std/mem/fn.replace.html
-    // 
-    pub fn append(&mut self, value : String) {
+    //
+    pub fn append(&mut self, value: String) {
         let n = Node::new(value);
         match self.tail.take() {
             // Some(old), old is of NodeType, which is Rc<RefCell<T>>
@@ -52,7 +56,7 @@ impl TransactionLog {
 
             // self.head is of Option type therefore can directly
             // take Some(n)
-            None => self.head = Some(n.clone())
+            None => self.head = Some(n.clone()),
         };
         self.length += 1;
         self.tail = Some(n);
@@ -85,8 +89,7 @@ impl TransactionLog {
             if let Some(next) = head.borrow_mut().next.take() {
                 // chop the head
                 self.head = Some(next);
-            }
-            else {
+            } else {
                 // no head anymore, chop the tail
                 self.tail.take();
             }
@@ -107,6 +110,16 @@ impl TransactionLog {
         while !self.tail.is_none() {
             self.pop2();
         }
+    }
+}
+
+pub struct LogIterator {
+    current: Link,
+}
+
+impl LogIterator {
+    pub fn new(start_at: Link) -> LogIterator {
+        LogIterator { current: start_at }
     }
 }
 

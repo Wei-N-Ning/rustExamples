@@ -1,5 +1,5 @@
-//$(which true); dst=/var/tmp/sut; out=${dst}/$0.bin; 
-//$(which mkdir) -p ${dst}; 
+//$(which true); dst=/var/tmp/sut; out=${dst}/$0.bin;
+//$(which mkdir) -p ${dst};
 //$(which rustc) -o "${out}" 1>&2 "$0" && "${out}" "$@"; exit $?
 
 mod hash_map_fib {
@@ -24,11 +24,10 @@ mod hash_map_fib {
 
     pub fn demo() {
         let mut hm = HashMap::new();
-        (35..37).for_each( |x| println!("{} -> {}", x, fib(x, &mut hm)) )
+        (35..37).for_each(|x| println!("{} -> {}", x, fib(x, &mut hm)))
     }
 }
 
 fn main() {
     hash_map_fib::demo();
 }
-

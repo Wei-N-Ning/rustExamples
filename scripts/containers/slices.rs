@@ -1,11 +1,11 @@
-//$(which true); dst=/var/tmp/sut; out=${dst}/$0.bin; 
-//$(which mkdir) -p ${dst}; 
+//$(which true); dst=/var/tmp/sut; out=${dst}/$0.bin;
+//$(which mkdir) -p ${dst};
 //$(which rustc) -o "${out}" 1>&2 "$0" && "${out}" "$@"; exit $?
 
 // allow passing around views into memory without copying values or
 // passing raw pointers
 //
-// like vecs and strings, they consist of a pointer and a length, but 
+// like vecs and strings, they consist of a pointer and a length, but
 // they do not own the data they point to
 
 // strs are like slices for strings
@@ -16,14 +16,14 @@
 
 fn demo_vector_slice() {
     let nums = vec![3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8];
-    let s1_nums = &nums[1..3];  // [1 -> 3) exclusive
+    let s1_nums = &nums[1..3]; // [1 -> 3) exclusive
     s1_nums.iter().for_each(|x| print!("{} ", x));
     println!("");
 }
 
 fn demo_string_slice() {
     let s = String::from("there is a cow");
-    let s1_s = &s[2..4];  // exclusive
+    let s1_s = &s[2..4]; // exclusive
     println!("{}", s1_s);
 }
 

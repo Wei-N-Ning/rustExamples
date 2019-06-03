@@ -1,12 +1,12 @@
-//$(which true); dst=/var/tmp/sut; out=${dst}/$0.bin; 
-//$(which mkdir) -p ${dst}; 
+//$(which true); dst=/var/tmp/sut; out=${dst}/$0.bin;
+//$(which mkdir) -p ${dst};
 //$(which rustc) -o "${out}" 1>&2 "$0" && "${out}" "$@"; exit $?
 
 use std::mem;
 
 #[derive(Copy, Clone, Debug)]
 struct Item {
-    value : i32
+    value: i32,
 }
 
 // This function borrows a slice
@@ -16,8 +16,8 @@ fn analyze_slice(slice: &[i32]) {
 }
 
 fn implicit_copy_from_slice(slice: &[Item]) {
-    let mut _i = slice[0];  // making a copy from the borrowed slice
-    _i.value = 999;  // changing the local copy 
+    let mut _i = slice[0]; // making a copy from the borrowed slice
+    _i.value = 999; // changing the local copy
 }
 
 fn main() {
@@ -43,12 +43,12 @@ fn main() {
 
     // Slices can point to a section of an array
     println!("borrow a section of the array as a slice");
-    analyze_slice(&ys[1 .. 4]);
+    analyze_slice(&ys[1..4]);
 
     // Out of bound indexing causes compile error
     // println!("{}", xs[5]);
 
-    let items: [Item; 2] = [Item {value: 1}, Item {value: 2}];
+    let items: [Item; 2] = [Item { value: 1 }, Item { value: 2 }];
     implicit_copy_from_slice(&items[0..1]);
-    println!("{:?}", items[0]) // unaffected by the modification above 
+    println!("{:?}", items[0]) // unaffected by the modification above
 }
