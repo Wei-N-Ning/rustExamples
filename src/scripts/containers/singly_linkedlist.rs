@@ -128,16 +128,16 @@ impl LogIterator {
 impl Iterator for LogIterator {
     type Item = String;
     fn next(&mut self) -> Option<String> {
-        let current = self.current.clone();
+        let current_link = self.current.clone();
         let mut result = None;
-        self.current = match current {
+        self.current = match current_link {
             // I can also use value semantics here, instead of 
             // using an immut ref which saves a call to clone
             // the Rc; but isn't clone() the suggested approach?
-            Some(current) => {
-                let current = current.borrow();
-                result = Some(current.value.clone());
-                current.next.clone()
+            Some(current_ptr) => {
+                let current_node = current_ptr.borrow();
+                result = Some(current_node.value.clone());
+                current_node.next.clone()
             },
             None => None
         };
