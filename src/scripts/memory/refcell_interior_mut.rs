@@ -11,6 +11,22 @@ use std::cell::RefCell;
 // instead of compiler errors, violating the rules of borrowing
 // will lead to a runtime panic!() crashing the program
 
+// Rc<RefCell<T>> combination is equivalent to C++ std::shared_ptr<T>
+// void demo_modify_data_via_shared_ptr() {
+//     int* data = new int(1);
+//     auto ptr = shared_ptr<int>(data);
+//  -- ptr = Rc::new(RefCell::new(..data..))
+//     (*ptr) += 10234;
+//  -- ptr.borrow_mut() += 10234
+//     cout << *data << endl;
+// }
+fn demo_shared_ptr() {
+    let v = 23;
+    let ptr = Rc::new(RefCell::new(v));  // owns 23!
+    *(ptr.borrow_mut()) += 10232;
+    println!("v: {}", ptr.borrow());
+}
+
 fn demo_interior_mutability() {
     let s = Rc::new(RefCell::new(String::from("there is")));
 
@@ -39,6 +55,7 @@ fn demo_into_inner() {
 }
 
 fn main() {
+    demo_shared_ptr();
     demo_interior_mutability();
     demo_into_inner();
 }

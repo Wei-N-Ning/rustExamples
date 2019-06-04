@@ -31,7 +31,23 @@ fn demo_take_none() {
     println!("as a result (should be None): {:?}", v);
 }
 
+// beside using value semantics, I can use ref and mut ref
+// semantics in the match statement: 
+// if v is not None, and it is mutable, create a mutable ref
+// for it to be used by the inner block
+fn demo_ref_pattern() {
+    let mut v = Some(123);
+    match v {
+        Some(ref mut v_ref) => {
+            *v_ref += 12123;
+            println!("{}", v_ref);
+        },
+        None => {}
+    }
+}
+
 fn main() {
     demo_take_value();
     demo_take_none();
+    demo_ref_pattern();
 }

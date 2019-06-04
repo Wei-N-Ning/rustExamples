@@ -52,6 +52,8 @@ impl TransactionLog {
         match self.tail.take() {
             // Some(old), old is of NodeType, which is Rc<RefCell<T>>
             // must call borrow_mut() to create short-living mut ref
+            // can also use ref pattern here, old is an immut
+            // ref to Rc<RefCell<T>>; it does not bring a big benefit
             Some(old) => old.borrow_mut().next = Some(n.clone()),
 
             // self.head is of Option type therefore can directly
@@ -129,7 +131,10 @@ impl Iterator for LogIterator {
         let current = self.current.clone();
         let mut result = None;
         self.current = match current {
-            Some(ref current) => {
+            // I can also use value semantics here, instead of 
+            // using an immut ref which saves a call to clone
+            // the Rc; but isn't clone() the suggested approach?
+            Some(current) => {
                 let current = current.borrow();
                 result = Some(current.value.clone());
                 current.next.clone()
