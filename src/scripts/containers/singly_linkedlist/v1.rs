@@ -81,7 +81,7 @@ impl TransactionLog {
     }
 
     // example from book L1482
-    pub fn pop2(&mut self) -> Option<String> {
+    pub fn pop(&mut self) -> Option<String> {
         // map will naturally stop when head is None
         self.head.take().map(|head| {
             if let Some(next) = head.borrow_mut().next.take() {
@@ -106,7 +106,7 @@ impl TransactionLog {
 
     pub fn drop(&mut self) {
         while !self.tail.is_none() {
-            self.pop2();
+            self.pop();
         }
     }
 }
