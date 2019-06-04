@@ -10,7 +10,7 @@ type Link = Option<NodeType>;
 
 #[derive(Debug, Clone)]
 struct Node {
-    value: String,
+    pub value: String,
     next: Link,
     prev: Link,
 }
@@ -45,6 +45,24 @@ impl ListIterator {
     }
 }
 
+impl Iterator for ListIterator {
+    type Item = String;
+
+    fn next(&mut self) -> Option<String> {
+        let current_link = self.current.clone();
+        let mut result = None;
+        self.current = match current_link {
+            Some(ref current_ref) => {
+                let current_node = current_ref.borrow();
+                result = Some(current_node.value.clone());
+                current_node.next.clone()
+            }
+            None => None,
+        };
+        result
+    }
+}
+
 fn test_node_creation() {
     let n = Node {
         value: "AA".to_string(),
@@ -55,6 +73,18 @@ fn test_node_creation() {
     assert!(n.next.is_none() && n.prev.is_none());
 }
 
+fn test_list_iterator() {
+    let n = Node {
+        value: "AA".to_string(),
+        next: None,
+        prev: None,
+    };
+    let l = Some(Rc::new(RefCell::new(n)));
+    let it = ListIterator::new(l);
+    it.for_each(|s| println!("{}", s));
+}
+
 fn main() {
     test_node_creation();
+    test_list_iterator();
 }
