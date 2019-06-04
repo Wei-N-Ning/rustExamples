@@ -114,12 +114,29 @@ impl TransactionLog {
 }
 
 pub struct LogIterator {
-    current: Link,
+    current: SingleLink,
 }
 
 impl LogIterator {
-    pub fn new(start_at: Link) -> LogIterator {
+    fn new(start_at: SingleLink) -> LogIterator {
         LogIterator { current: start_at }
+    }
+}
+
+impl Iterator for LogIterator {
+    type Item = String;
+    fn next(&mut self) -> Option<String> {
+        let current = self.current.clone();
+        let mut result = None;
+        self.current = match current {
+            Some(ref current) => {
+                let current = current.borrow();
+                result = Some(current.value.clone());
+                current.next.clone()
+            },
+            None => None
+        };
+        result
     }
 }
 
@@ -146,9 +163,10 @@ fn test_list_pop() {
     });
     (1..10).for_each(|_| {
         if let Some(s) = translog.pop2() {
-            println!("popped: {}", s);
+            print!("popped: {}, ", s);
         }
     });
+    println!("");
     assert_eq!(translog.length, 0);
 }
 
@@ -165,9 +183,20 @@ fn test_list_drop() {
     assert!(translog.head.is_none());
 }
 
+fn test_log_iterator() {
+    let mut translog = TransactionLog::new_empty();
+    (0..10).for_each(|idx| {
+        translog.append("AA_".to_string() + &idx.to_string());
+    });
+    let iter = LogIterator::new(translog.head);
+    iter.for_each( |s| print!("{}, ", s) );
+    println!("");
+}
+
 fn main() {
     test_list_creation();
     test_list_append();
     test_list_pop();
     test_list_drop();
+    test_log_iterator();
 }
