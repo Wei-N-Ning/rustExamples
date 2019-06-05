@@ -60,26 +60,6 @@ impl TransactionLog {
         self.tail = Some(new_node);
     }
 
-    // compare this to the example in the book
-    pub fn _pop(&mut self) -> Option<String> {
-        match self.head.take() {
-            Some(old) => {
-                let n = old.borrow_mut();
-                let s = n.value.clone();
-                self.head = n.next.clone();
-                self.length -= 1;
-                if self.length == 0 {
-                    self.tail.take();
-                }
-                return Some(s);
-            }
-            None => {
-                self.tail.take();
-                return None;
-            }
-        };
-    }
-
     // example from book L1482
     pub fn pop(&mut self) -> Option<String> {
         // map will naturally stop when head is None
@@ -89,7 +69,7 @@ impl TransactionLog {
                 self.head = Some(next);
             } else {
                 // no head anymore, chop the tail
-                self.tail.take();
+                self.tail = None;
             }
             // if map() stops calling the inner block, length
             // won't be decremented any more

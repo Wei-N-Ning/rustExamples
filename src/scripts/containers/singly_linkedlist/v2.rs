@@ -53,21 +53,17 @@ impl TransactionLog {
 
     // popleft()
     pub fn pop(&mut self) -> Option<String> {
-        let mut result = None;
-        match self.head.take() {
-            Some(old_head) => {
-                let old_head_node = old_head.borrow();
-                result = Some(old_head_node.value.clone());
-                self.head = old_head_node.next.clone();
-                self.length -= 1;
-            },
-            None => {
-                if let Some(old_tail) = self.tail.take() {
-                    result = Some(old_tail.borrow().value.clone());
-                }
+        self.head.take().map(|old_head| {
+            if let Some(ref old_next) = old_head.borrow_mut().next {
+                self.head = Some(old_next.clone());
             }
-        };
-        result
+            else {
+                self.tail = None;
+            }
+            self.length -= 1;
+            Rc::try_unwrap(old_head)
+                .ok().expect("fatal error").into_inner().value
+        })
     }
 
     pub fn drop(&mut self) {

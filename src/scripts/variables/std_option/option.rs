@@ -31,6 +31,23 @@ fn demo_take_none() {
     println!("as a result (should be None): {:?}", v);
 }
 
+fn return_string() -> Option<String> {
+    // map() wrap the raw value (string asd) in a Some()
+    Some(1).map(|_| "asd".to_string())
+}
+
+fn _return_none() -> Option<String> {
+    // this does not work: expect the raw value to be String 
+    // not None
+    // this function has to explicitly return None
+    // Some(1).map(|_| None)
+    None
+}
+
+fn demo_return_string() {
+    println!("{:?}", return_string());
+}
+
 // beside using value semantics, I can use ref and mut ref
 // semantics in the match statement: 
 // if v is not None, and it is mutable, create a mutable ref
@@ -49,5 +66,6 @@ fn demo_ref_pattern() {
 fn main() {
     demo_take_value();
     demo_take_none();
+    demo_return_string();
     demo_ref_pattern();
 }
