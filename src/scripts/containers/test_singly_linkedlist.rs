@@ -3,7 +3,7 @@
 //$(which rustc) -o "${out}" 1>&2 "$0" && "${out}" "$@"; exit $?
 
 mod singly_linkedlist;
-use singly_linkedlist::v2::*;
+use singly_linkedlist::v3::*;
 
 fn test_list_creation() {
     let translog = TransactionLog::new_empty();
