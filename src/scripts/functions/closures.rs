@@ -30,6 +30,15 @@ fn demo_closure_creation() -> Box<Fn() -> i32> {
     Box::new(move || { 10 })
 }
 
+// for closure to modify a captured parent-scope var, it must be
+// mut
+fn demo_mut_closure() {
+    let mut x = 3;
+    let mut clo1 = || { x += 1 };
+    clo1();
+    // assert_eq!(x, 4);
+}
+
 // source
 // how to pass closure to function
 // https://doc.rust-lang.org/rust-by-example/fn/closures/input_parameters.html
@@ -61,4 +70,6 @@ fn apply<F>(f: F) where
 fn main() {
     let f = demo_closure_creation();
     println!("called as return value: {}", f());
+
+    demo_mut_closure();
 }

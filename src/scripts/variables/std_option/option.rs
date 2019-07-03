@@ -63,6 +63,8 @@ fn demo_ref_pattern() {
     }
 }
 
+// TODO: look into option ? (and recall Haskell's way of dealing with this)
+
 fn main() {
     demo_take_value();
     demo_take_none();
